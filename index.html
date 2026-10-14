@@ -1,7 +1,113 @@
-<!doctype html><html lang="ru"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>FORBES</title><link rel="stylesheet" href="forbes-tablet.css"></head><body>
-<div class="app">
-<aside class="profile"><div class="logo"><span>♛</span><b>FORBES</b></div><h3>Профиль</h3><p>Игрок</p><small>Семья: Отсутствует</small><div class="level">Уровень 26<div><i></i></div></div></aside>
-<main><header>Основные действия</header><div class="grid">
-<button onclick="openForbes()">♛<span>Форбс</span></button><button>ℹ️<span>Информация</span></button><button>🧭<span>Навигатор</span></button><button>☰<span>Меню</span></button><button>🎁<span>Инвентарь</span></button><button>👥<span>Семья</span></button><button>⚙️<span>Настройки</span></button>
-</div></main><nav><div>👤</div><div>🔔</div><div>⚙</div></nav></div>
-<div id="window"><div class="forbes-card"><h2>♛<br>FORBES</h2><p>Официальный раздел проекта Forbes. Здесь собрана вся важная информация, новости и возможности.</p><section><article>📰<b>Новости</b></article><article>♛<b>О проекте</b></article><article>👥<b>Команда</b></article><article>📊<b>Статистика</b></article><article>⭐<b>Правила</b></article><article>💬<b>Сообщество</b></article></section></div></div><script>function openForbes(){document.getElementById('window').classList.add('show')}</script></body></html>
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#030710">
+  <meta name="description" content="FORBES — планшетное игровое меню и раздел проекта">
+  <title>FORBES — Планшет</title>
+  <link rel="icon" href="assets/images/favicon.png">
+  <link rel="stylesheet" href="tablet.css?v=2">
+  <script src="tablet.js?v=2" defer></script>
+</head>
+<body>
+<svg class="sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <defs>
+    <linearGradient id="crownBlue" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#60a5ff"/><stop offset=".42" stop-color="#0968ff"/><stop offset="1" stop-color="#0033a5"/></linearGradient>
+    <linearGradient id="iconBlue" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f6faff"/><stop offset="1" stop-color="#c6dcff"/></linearGradient>
+  </defs>
+  <symbol id="crown" viewBox="0 0 100 76"><path d="M7 63 2 15l28 23L49 3l20 35 29-23-6 48H7Z" fill="url(#crownBlue)"/><path d="M9 69h82v6H9z" fill="#0061ef"/><path d="m15 54 18-10 15-27 19 30 18-16-5 25Z" fill="#1d85ff" opacity=".42"/></symbol>
+  <symbol id="shield" viewBox="0 0 24 24"><path d="m12 2 8 3v6c0 5-3.4 8.7-8 11-4.6-2.3-8-6-8-11V5l8-3Z"/><path d="m12 5 5 2v4c0 3.2-1.8 5.6-5 7.4-3.2-1.8-5-4.2-5-7.4V7l5-2Z"/></symbol>
+  <symbol id="info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-10v.1"/></symbol>
+  <symbol id="factions" viewBox="0 0 24 24"><path d="m3 20 2-11 4 5 3-9 3 9 4-5 2 11H3Z"/><path d="M8 6 5 3m11 3 3-3"/></symbol>
+  <symbol id="send" viewBox="0 0 24 24"><path d="m22 2-7.5 20-4.1-8.4L2 9.5 22 2Z"/><path d="m10.4 13.6 5.3-5.3"/></symbol>
+  <symbol id="taxi" viewBox="0 0 24 24"><path d="M2 6h4v4H2zm4 4h4v4H6zm4-4h4v4h-4zm4 4h4v4h-4zm4-4h4v4h-4z"/></symbol>
+  <symbol id="menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
+  <symbol id="gift" viewBox="0 0 24 24"><rect x="3" y="10" width="18" height="11" rx="2"/><path d="M2 10h20V7H2v3Zm10-3v14M12 7C6 7 5 2 8 2c2 0 4 3 4 5Zm0 0c6 0 7-5 4-5-2 0-4 3-4 5Z"/></symbol>
+  <symbol id="animation" viewBox="0 0 24 24"><circle cx="14" cy="4" r="2"/><path d="m11 8 4 2 3-2M12 9l-3 5-4 2m8-3 2 4-2 5m-4-8 4 2"/></symbol>
+  <symbol id="ruble" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9 18V6h4a4 4 0 0 1 0 8H9m-2 2h8"/></symbol>
+  <symbol id="car" viewBox="0 0 24 24"><path d="m4 14 2-7h12l2 7v5H4v-5ZM4 14h16M7 18h.1M17 18h.1M6 7l2-2h8l2 2"/></symbol>
+  <symbol id="ticket" viewBox="0 0 24 24"><path d="M3 6h18v4a2 2 0 0 0 0 4v4H3v-4a2 2 0 0 0 0-4V6Z"/><path d="m12 8 1.3 2.7 3 .4-2.2 2.1.5 3-2.6-1.4-2.6 1.4.5-3-2.2-2.1 3-.4L12 8Z"/></symbol>
+  <symbol id="headset" viewBox="0 0 24 24"><path d="M3 13v-2a9 9 0 0 1 18 0v2M3 13v5h4v-7H3v2Zm18 0v5h-4v-7h4v2Zm0 5c0 2-3 4-7 4"/></symbol>
+  <symbol id="users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><circle cx="18" cy="9" r="2"/><path d="M2 20v-3a7 7 0 0 1 14 0v3H2Zm14-8a5 5 0 0 1 6 5v3h-4"/></symbol>
+  <symbol id="calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 2v6m10-6v6M3 10h18m-13 5h.1m4 0h.1m4 0h.1"/></symbol>
+  <symbol id="coins" viewBox="0 0 24 24"><ellipse cx="12" cy="6" rx="8" ry="4"/><path d="M4 6v5c0 2.2 3.6 4 8 4s8-1.8 8-4V6M4 11v5c0 2.2 3.6 4 8 4s8-1.8 8-4v-5"/></symbol>
+  <symbol id="user" viewBox="0 0 24 24"><circle cx="12" cy="7" r="4"/><path d="M4 22v-3a8 8 0 0 1 16 0v3"/></symbol>
+  <symbol id="bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 10h18c0-3-3-3-3-10ZM10 21h4"/></symbol>
+  <symbol id="settings" viewBox="0 0 24 24"><path d="m10 2-.6 2.2-2.1.9-2-.9-2.1 3.6 1.6 1.5-.3 2.4L2 13l1.2 4 2.3.1 1.7 1.7-.3 2.2 4 1 1-2 2.4-.3 1.5 1.6 3.6-2.1-.9-2 1-2.1L22 14l-1-4-2.2-.3-1.6-1.7.8-2-3.6-2.1-1.5 1.6-2.3-.4L10 2Z"/><circle cx="12" cy="12" r="3.2"/></symbol>
+  <symbol id="arrow-left" viewBox="0 0 24 24"><path d="m12 4-8 8 8 8M4 12h17"/></symbol>
+  <symbol id="chevron" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></symbol>
+  <symbol id="news" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></symbol>
+  <symbol id="bars" viewBox="0 0 24 24"><path d="M3 14h4v7H3zm7-6h4v13h-4zm7-5h4v18h-4z"/></symbol>
+  <symbol id="star" viewBox="0 0 24 24"><path d="m12 2 3 6.4 7 .9-5.1 5 .9 7-5.8-3.3-5.8 3.3.9-7-5.1-5 7-.9L12 2Z"/></symbol>
+  <symbol id="chat" viewBox="0 0 24 24"><path d="M4 4h16a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H9l-5 3v-3a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z"/><path d="M7 12h.1M12 12h.1M17 12h.1"/></symbol>
+  <symbol id="close" viewBox="0 0 24 24"><path d="M4 4 20 20M20 4 4 20"/></symbol>
+  <symbol id="external" viewBox="0 0 24 24"><path d="M13 4h7v7m0-7-9 9M20 14v6H4V4h6"/></symbol>
+</svg>
+<div class="viewport">
+ <div class="tablet" id="tablet">
+  <div class="status"><span>9:41</span><span class="wifi"></span><span class="signal"></span><span class="battery"></span></div>
+  <button class="exit" id="exitBtn" title="Открыть основной сайт" aria-label="Открыть основной сайт"><svg><use href="#close"/></svg></button>
+  <div class="watermark" aria-hidden="true">FORBES<span>78</span></div>
+  <div class="ambient" aria-hidden="true"></div>
+  <aside class="profile-card">
+   <div class="profile-heading"><svg><use href="#shield"/></svg><span>Профиль</span></div>
+   <button class="profile-logo" id="profileLogo" aria-label="Открыть раздел Форбс"><svg class="logo-crown"><use href="#crown"/></svg><strong>FORBES</strong></button>
+   <div class="player-name">Игрок</div>
+   <div class="family">Семья: Отсутствует</div>
+   <div class="level"><div class="level-name">Уровень 26</div><div class="progress"><div class="progress-fill"></div><span> / 108</span></div></div>
+  </aside>
+  <main class="main-area">
+   <section class="dashboard screen active" id="dashboard" aria-label="Основные действия">
+    <h1>Основные действия</h1>
+    <div class="actions">
+     <button class="action" data-action="Информация" data-link="site.html"><span class="action-icon"><svg><use href="#info"/></svg></span><span>Информация</span></button>
+     <button class="action" data-action="Фракции"><span class="action-icon"><svg><use href="#factions"/></svg></span><span>Фракции</span></button>
+     <button class="action" data-action="Навигатор"><span class="action-icon"><svg><use href="#send"/></svg></span><span>Навигатор</span></button>
+     <button class="action" data-action="Вызов такси"><span class="action-icon"><svg><use href="#taxi"/></svg></span><span>Вызов такси</span></button>
+     <button class="action" data-action="Меню" data-link="site.html"><span class="action-icon"><svg><use href="#menu"/></svg></span><span>Меню</span></button>
+     <button class="action" data-action="Инвентарь"><span class="action-icon"><svg><use href="#gift"/></svg></span><span>Инвентарь</span></button>
+     <button class="action" data-action="Анимации"><span class="action-icon"><svg><use href="#animation"/></svg></span><span>Анимации</span></button>
+     <button class="action" data-action="Донат"><span class="action-icon"><svg><use href="#ruble"/></svg></span><span>Донат</span></button>
+     <button class="action" data-action="Транспорт" data-link="garage.html"><span class="action-icon"><svg><use href="#car"/></svg></span><span>Транспорт</span></button>
+     <button class="action" data-action="Промокод"><span class="action-icon"><svg><use href="#ticket"/></svg></span><span>Промокод</span></button>
+     <button class="action" data-action="Жалоба" data-link="support.html"><span class="action-icon"><svg><use href="#headset"/></svg></span><span>Жалоба</span></button>
+     <button class="action" data-action="Семья"><span class="action-icon"><svg><use href="#users"/></svg></span><span>Семья</span></button>
+     <button class="action has-dot" data-action="Календарь" data-link="events.html"><span class="action-icon"><svg><use href="#calendar"/></svg></span><span>Календарь</span></button>
+     <button class="action forbes-action" data-action="Форбс" id="forbesButton"><span class="forbes-icon"><svg><use href="#crown"/></svg><strong>FORBES</strong></span><span>Форбс</span></button>
+     <button class="action" data-action="Токены"><span class="action-icon"><svg><use href="#coins"/></svg></span><span>Токены</span></button>
+    </div>
+    <div class="pages"><span class="selected"></span><span></span></div>
+   </section>
+   <section class="forbes-screen screen" id="forbesScreen" aria-label="Раздел Форбс">
+    <div class="forbes-panel">
+     <button class="back" id="backButton"><svg><use href="#arrow-left"/></svg><span>Форбс</span></button>
+     <div class="hero">
+      <div class="hero-copy"><div class="brand"><svg><use href="#crown"/></svg><strong>FORBES</strong></div><p>Официальный раздел проекта Forbes. Здесь собрана вся важная информация, новости и возможности.</p></div>
+      <div class="hero-art" aria-hidden="true"><svg><use href="#crown"/></svg></div>
+     </div>
+     <div class="sections">
+      <button class="section-card" data-section="news"><span class="section-icon"><svg><use href="#news"/></svg></span><span class="section-copy"><strong>Новости</strong><small>Последние обновления</small></span><svg class="chev"><use href="#chevron"/></svg></button>
+      <button class="section-card" data-section="about"><span class="section-icon"><svg><use href="#crown"/></svg></span><span class="section-copy"><strong>О проекте</strong><small>Информация о сервере</small></span><svg class="chev"><use href="#chevron"/></svg></button>
+      <button class="section-card" data-section="team"><span class="section-icon"><svg><use href="#users"/></svg></span><span class="section-copy"><strong>Команда</strong><small>Разработчики и администрация</small></span><svg class="chev"><use href="#chevron"/></svg></button>
+      <button class="section-card" data-section="stats"><span class="section-icon"><svg><use href="#bars"/></svg></span><span class="section-copy"><strong>Статистика</strong><small>Онлайн и достижения</small></span><svg class="chev"><use href="#chevron"/></svg></button>
+      <button class="section-card" data-section="rules"><span class="section-icon"><svg><use href="#star"/></svg></span><span class="section-copy"><strong>Правила</strong><small>Основные правила проекта</small></span><svg class="chev"><use href="#chevron"/></svg></button>
+      <button class="section-card" data-section="community"><span class="section-icon"><svg><use href="#chat"/></svg></span><span class="section-copy"><strong>Сообщество</strong><small>Наши социальные сети</small></span><svg class="chev"><use href="#chevron"/></svg></button>
+     </div>
+    </div>
+   </section>
+   <section class="detail-screen screen" id="detailScreen" aria-label="Подраздел Форбс">
+     <div class="detail-panel"><button class="back" id="detailBack"><svg><use href="#arrow-left"/></svg><span>Форбс</span></button><div class="detail-body"><div class="detail-icon" id="detailIcon"></div><div class="detail-kicker">РАЗДЕЛ FORBES</div><h2 id="detailTitle"></h2><p id="detailDescription"></p><a class="detail-link" id="detailLink" href="site.html">Открыть раздел на сайте <svg><use href="#external"/></svg></a></div></div>
+   </section>
+  </main>
+  <nav class="rail" aria-label="Быстрые действия">
+   <button class="rail-button current" data-rail="profile" aria-label="Профиль"><svg><use href="#user"/></svg></button>
+   <button class="rail-button" data-rail="account" aria-label="Аккаунт"><svg><use href="#user"/></svg></button>
+   <button class="rail-button notification" data-rail="notifications" aria-label="Уведомления"><svg><use href="#bell"/></svg></button>
+   <button class="rail-button" data-rail="settings" aria-label="Настройки"><svg><use href="#settings"/></svg></button>
+  </nav>
+  <div class="dialog-layer" id="dialogLayer" hidden><div class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialogTitle"><button class="dialog-close" id="dialogClose" aria-label="Закрыть"><svg><use href="#close"/></svg></button><div class="dialog-label">FORBES · ПЛАНШЕТ</div><h2 id="dialogTitle"></h2><p id="dialogText"></p><a id="dialogLink" class="dialog-link" href="site.html" hidden>Открыть на сайте <svg><use href="#external"/></svg></a><button class="dialog-ok" id="dialogOk">Понятно</button></div></div>
+ </div>
+</div>
+</body>
+</html>
