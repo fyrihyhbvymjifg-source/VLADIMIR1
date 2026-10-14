@@ -1,48 +1,65 @@
 (() => {
- 'use strict';
- const stage = document.getElementById('tablet');
- const dashboard = document.getElementById('dashboard');
- const forbes = document.getElementById('forbesScreen');
- const detail = document.getElementById('detailScreen');
- const dialog = document.getElementById('dialogLayer');
- const sections = {
-   news: {title:'Новости',desc:'Последние новости, события и обновления проекта. Все актуальные публикации доступны на основном сайте.',href:'events.html',icon:'news'},
-   about: {title:'О проекте',desc:'Информация о FORBES, его возможностях и главных разделах. Перейдите на основной сайт, чтобы узнать больше.',href:'site.html',icon:'crown'},
-   team: {title:'Команда',desc:'Сведения о команде и администрации проекта. Просматривайте список участников на сайте.',href:'admins.html',icon:'users'},
-   stats: {title:'Статистика',desc:'Рейтинги, лидеры и достижения участников FORBES.',href:'leaders.html',icon:'bars'},
-   rules: {title:'Правила',desc:'Ознакомьтесь с действующими правилами и условиями использования проекта.',href:'terms.html',icon:'star'},
-   community: {title:'Сообщество',desc:'Общайтесь с другими участниками сообщества FORBES в разделе чата.',href:'chat.html',icon:'chat'}
- };
- function resize(){const scale = Math.min((window.innerWidth-28)/1280,(window.innerHeight-28)/800,1.35);stage.style.setProperty('--stage-scale',String(Math.max(.18,scale)));}
- window.addEventListener('resize',resize,{passive:true});resize();
- function screen(which){[dashboard,forbes,detail].forEach(x=>{x.classList.toggle('active',x===which);x.setAttribute('aria-hidden',String(x!==which));});}
- function openForbes(){closeDialog();screen(forbes);history.replaceState(null,'',location.pathname+'#forbes');}
- function goHome(){closeDialog();screen(dashboard);history.replaceState(null,'',location.pathname);}
- function openDetail(key){const d=sections[key];if(!d)return;document.getElementById('detailTitle').textContent=d.title;document.getElementById('detailDescription').textContent=d.desc;document.getElementById('detailLink').href=d.href;document.getElementById('detailIcon').innerHTML='<svg><use href="#'+d.icon+'"/></svg>';screen(detail);history.replaceState(null,'',location.pathname+'#'+key);}
- function closeDialog(){dialog.hidden=true;}
- function openDialog(title,message,link){document.getElementById('dialogTitle').textContent=title;document.getElementById('dialogText').textContent=message;const a=document.getElementById('dialogLink');a.hidden=!link;if(link)a.href=link;dialog.hidden=false;document.getElementById('dialogOk').focus();}
- document.getElementById('forbesButton').addEventListener('click',openForbes);
- document.getElementById('profileLogo').addEventListener('click',openForbes);
- document.getElementById('backButton').addEventListener('click',goHome);
- document.getElementById('detailBack').addEventListener('click',openForbes);
- document.querySelectorAll('.section-card').forEach(b=>b.addEventListener('click',()=>openDetail(b.dataset.section)));
- document.querySelectorAll('.action:not(.forbes-action)').forEach(b=>b.addEventListener('click',()=>{
-   const title=b.dataset.action;
-   const link=b.dataset.link;
-   if(link){openDialog(title,'Этот раздел доступен на основном сайте FORBES. Нажмите «Открыть на сайте», чтобы перейти к нему.',link);}
-   else{openDialog(title,'Этот пункт показан как часть игрового интерфейса. Для работы с ним требуется подключение к игровому клиенту.');}
- }));
- document.querySelectorAll('.rail-button').forEach(b=>b.addEventListener('click',()=>{
-   const id=b.dataset.rail;
-   if(id==='profile'||id==='account')openDialog('Профиль','Ваш профиль и настройки аккаунта доступны на основном сайте FORBES.','profile.html');
-   if(id==='notifications')openDialog('Уведомления','Актуальные события и объявления проекта можно посмотреть на сайте.','events.html');
-   if(id==='settings')openDialog('Настройки','Настройки игрового клиента отображаются здесь как прототип. Для просмотра сайта перейдите по кнопке ниже.','site.html');
- }));
- document.getElementById('exitBtn').addEventListener('click',()=>openDialog('Выйти из планшета','Открыть основную веб-версию FORBES?','site.html'));
- document.getElementById('dialogClose').addEventListener('click',closeDialog);
- document.getElementById('dialogOk').addEventListener('click',closeDialog);
- dialog.addEventListener('click',e=>{if(e.target===dialog)closeDialog();});
- window.addEventListener('keydown',e=>{if(e.key==='Escape'){if(!dialog.hidden)closeDialog();else if(detail.classList.contains('active'))openForbes();else if(forbes.classList.contains('active'))goHome();}});
- const hash=location.hash.slice(1);
- if(hash==='forbes')screen(forbes);else if(sections[hash])openDetail(hash);else screen(dashboard);
+'use strict';
+const stage=document.getElementById('tablet');
+const dashboard=document.getElementById('dashboard');
+const forbes=document.getElementById('forbesScreen');
+const dialog=document.getElementById('dialogLayer');
+const overlay=document.getElementById('playerOverlay');
+const order=[["Lauren_Degraf", "8 млрд"], ["Tommy_Ritchie", "5,67 млрд"], ["Eldar_Bill", "5,2 млрд"], ["Pikmi_Grey", "4,95 млрд"], ["Sam_NonStop", "2,75 млрд"], ["Dizni", "2,1 млрд"], ["Andrey_Fox", "1,5 млрд"], ["Sasha_Prince", "1,4 млрд"], ["Welttime_Hunter", "1,4 млрд"], ["Ares_Steelhex", "1,2 млрд"], ["Ralph_Deep", "1,03 млрд"], ["Spike_Moskvin", "849 млн"], ["Calypso_Person", "624 млн"], ["Evgeniy_Kiselev", "600 млн"], ["Danix_Chase", "600 млн"], ["Aleks_sber", null], ["Andrey_Nebro", null], ["Angel_Ld", null], ["Donatello_Deep", null], ["Elita_Wizzart", null], ["Guy_Ritchie", null], ["Lyntic_Farm", null], ["Macan_Ritchie", null], ["Thomas_Under", null], ["Tima_Evans", null], ["Tuborosho_BeMad", null], ["Valeriy_Invest", null], ["Vanya_Foksovich", null], ["Vito_Luchiano", null]];
+const base=window.BR_PLAYERS||[];
+const players=order.map(([nick,wealth],i)=>{
+  const match=base.find(p=>p.nick.toLowerCase()===nick.toLowerCase() || (nick==='Dizni'&&p.nick==='Dizni_Xamster'))||{};
+  return {rank:i+1,nick,name:match.name||nick,vk:match.vk||'',wealth:wealth||'Не указано',move:([9,10].includes(i+1)?'+2':[11,12].includes(i+1)?'-2':''),role:nick==='Sasha_Prince'?'🎥 Блогер':nick==='Calypso_Person'?'🛠️ Разработчик · 🎥 Блогер':''};
+});
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function resize(){const scale=Math.min((innerWidth-24)/1280,(innerHeight-24)/800,1.35);stage.style.setProperty('--stage-scale',String(Math.max(.15,scale)));}
+window.addEventListener('resize',resize,{passive:true});resize();
+function screen(show){dashboard.classList.toggle('active',show===dashboard);forbes.classList.toggle('active',show===forbes);dashboard.setAttribute('aria-hidden',String(show!==dashboard));forbes.setAttribute('aria-hidden',String(show!==forbes));}
+function openForbes(){closeDialog();closeProfile();screen(forbes);try{history.replaceState(null,'',location.pathname+'#forbes');}catch(e){} document.getElementById('boardScroll').scrollTop=0;}
+function goHome(){closeProfile();closeDialog();screen(dashboard);try{history.replaceState(null,'',location.pathname);}catch(e){} }
+function initials(n){return n.split('_').map(x=>x[0]).join('').slice(0,2).toUpperCase();}
+function render(){
+  document.getElementById('boardScroll').innerHTML=players.map(p=>`<button type="button" class="rank-card ${p.rank<=3?'rank-top rank-top-'+p.rank:''}" data-rank="${p.rank}" role="listitem" aria-label="${esc(p.nick)}, место ${p.rank}, состояние ${esc(p.wealth)}">
+    <span class="rank-position">${String(p.rank).padStart(2,'0')}</span>
+    <span class="rank-avatar">${p.rank===1?'<span class="mini-crown">♛</span>':''}${esc(initials(p.nick))}</span>
+    <span class="rank-person"><strong>${esc(p.nick)}</strong><small>${esc(p.name)}</small>${p.role?`<em>${esc(p.role)}</em>`:''}</span>
+    <span class="rank-money"><strong>${esc(p.wealth)}</strong>${p.move?`<small class="rank-change ${p.move[0]==='+'?'up':'down'}">${p.move[0]==='+'?'↑':'↓'} ${esc(p.move)}</small>`:''}</span>
+    <svg class="rank-chevron"><use href="#chevron"/></svg>
+  </button>`).join('');
+  document.querySelectorAll('.rank-card').forEach(b=>b.addEventListener('click',()=>openProfile(players[Number(b.dataset.rank)-1])));
+}
+function openProfile(p){
+  document.getElementById('modalAvatar').textContent=initials(p.nick);
+  document.getElementById('modalPlace').textContent=`МЕСТО #${p.rank} · VLADIMIR`;
+  document.getElementById('modalNick').textContent=p.nick;
+  document.getElementById('modalName').textContent=p.name;
+  document.getElementById('modalWealth').textContent=p.wealth;
+  const vk=document.getElementById('modalVk');vk.hidden=!p.vk;if(p.vk)vk.href=p.vk;
+  overlay.hidden=false;document.getElementById('playerModalClose').focus();
+}
+function closeProfile(){overlay.hidden=true;}
+function closeDialog(){dialog.hidden=true;}
+function openDialog(title,message,link){document.getElementById('dialogTitle').textContent=title;document.getElementById('dialogText').textContent=message;const a=document.getElementById('dialogLink');a.hidden=!link;if(link)a.href=link;dialog.hidden=false;document.getElementById('dialogOk').focus();}
+document.getElementById('forbesButton').addEventListener('click',openForbes);
+document.getElementById('profileLogo').addEventListener('click',openForbes);
+document.getElementById('backButton').addEventListener('click',goHome);
+document.getElementById('playerModalClose').addEventListener('click',closeProfile);
+overlay.addEventListener('click',e=>{if(e.target===overlay)closeProfile();});
+document.querySelectorAll('.action:not(.forbes-action)').forEach(b=>b.addEventListener('click',()=>{
+ const title=b.dataset.action;const link=b.dataset.link;
+ if(link)openDialog(title,'Этот раздел доступен на основном сайте. Нажмите «Открыть на сайте», чтобы перейти к нему.',link);
+ else openDialog(title,'Этот пункт показан как часть игрового планшета. Для его работы требуется подключение к игровому клиенту.');
+}));
+document.querySelectorAll('.rail-button').forEach(b=>b.addEventListener('click',()=>{
+ const id=b.dataset.rail;
+ if(id==='profile'||id==='account')openDialog('Профиль','Профиль игрока на основном сайте.','profile.html');
+ if(id==='notifications')openDialog('Уведомления','События и объявления проекта.','events.html');
+ if(id==='settings')openDialog('Настройки','Настройки доступны на основном сайте.','site.html');
+}));
+document.getElementById('exitBtn').addEventListener('click',()=>openDialog('Закрыть планшет','Открыть основную веб-версию FORBES?','site.html'));
+document.getElementById('dialogClose').addEventListener('click',closeDialog);
+document.getElementById('dialogOk').addEventListener('click',closeDialog);
+dialog.addEventListener('click',e=>{if(e.target===dialog)closeDialog();});
+window.addEventListener('keydown',e=>{if(e.key==='Escape'){if(!overlay.hidden)closeProfile();else if(!dialog.hidden)closeDialog();else if(forbes.classList.contains('active'))goHome();}});
+render();if(location.hash==='#forbes')screen(forbes);else screen(dashboard);
 })();

@@ -7,8 +7,10 @@
   <meta name="description" content="FORBES — планшетное игровое меню и раздел проекта">
   <title>FORBES — Планшет</title>
   <link rel="icon" href="assets/images/favicon.png">
-  <link rel="stylesheet" href="tablet.css?v=2">
-  <script src="tablet.js?v=2" defer></script>
+  <link rel="stylesheet" href="tablet.css?v=3">
+  <link rel="stylesheet" href="leaderboard.css?v=3">
+  <script src="assets/data/data.js" defer></script>
+  <script src="tablet.js?v=3" defer></script>
 </head>
 <body>
 <svg class="sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -48,7 +50,7 @@
  <div class="tablet" id="tablet">
   <div class="status"><span>9:41</span><span class="wifi"></span><span class="signal"></span><span class="battery"></span></div>
   <button class="exit" id="exitBtn" title="Открыть основной сайт" aria-label="Открыть основной сайт"><svg><use href="#close"/></svg></button>
-  <div class="watermark" aria-hidden="true">FORBES<span>78</span></div>
+  <div class="watermark" aria-hidden="true">FORBES</div>
   <div class="ambient" aria-hidden="true"></div>
   <aside class="profile-card">
    <div class="profile-heading"><svg><use href="#shield"/></svg><span>Профиль</span></div>
@@ -74,30 +76,24 @@
      <button class="action" data-action="Жалоба" data-link="support.html"><span class="action-icon"><svg><use href="#headset"/></svg></span><span>Жалоба</span></button>
      <button class="action" data-action="Семья"><span class="action-icon"><svg><use href="#users"/></svg></span><span>Семья</span></button>
      <button class="action has-dot" data-action="Календарь" data-link="events.html"><span class="action-icon"><svg><use href="#calendar"/></svg></span><span>Календарь</span></button>
-     <button class="action forbes-action" data-action="Форбс" id="forbesButton"><span class="forbes-icon"><svg><use href="#crown"/></svg><strong>FORBES</strong></span><span>Форбс</span></button>
+     <button class="action forbes-action" data-action="Форбс" id="forbesButton"><span class="forbes-icon"><svg><use href="#crown"/></svg><strong>FORBES</strong></span><span>Форбс</span><span class="onboard-hint" aria-hidden="true"><span>ЖМИ СЮДА</span><span class="hint-arrow">↓</span></span></button>
      <button class="action" data-action="Токены"><span class="action-icon"><svg><use href="#coins"/></svg></span><span>Токены</span></button>
     </div>
     <div class="pages"><span class="selected"></span><span></span></div>
    </section>
-   <section class="forbes-screen screen" id="forbesScreen" aria-label="Раздел Форбс">
-    <div class="forbes-panel">
-     <button class="back" id="backButton"><svg><use href="#arrow-left"/></svg><span>Форбс</span></button>
-     <div class="hero">
-      <div class="hero-copy"><div class="brand"><svg><use href="#crown"/></svg><strong>FORBES</strong></div><p>Официальный раздел проекта Forbes. Здесь собрана вся важная информация, новости и возможности.</p></div>
-      <div class="hero-art" aria-hidden="true"><svg><use href="#crown"/></svg></div>
+   <section class="forbes-screen screen" id="forbesScreen" aria-label="Рейтинг Форбс">
+    <div class="forbes-panel leaderboard-panel">
+     <button class="back" id="backButton" aria-label="Назад к игровому меню"><svg><use href="#arrow-left"/></svg><span>Форбс</span></button>
+     <div class="board-hero">
+      <div class="board-brand"><svg><use href="#crown"/></svg><strong>FORBES</strong></div>
+      <div class="board-sub">РЕЙТИНГ ИГРОКОВ <span class="blue-dot"></span> VLADIMIR</div>
+      <div class="board-hero-crown" aria-hidden="true"><svg><use href="#crown"/></svg></div>
+      <div class="board-count"><span class="live-indicator"></span><b>29</b><small>участников</small></div>
      </div>
-     <div class="sections">
-      <button class="section-card" data-section="news"><span class="section-icon"><svg><use href="#news"/></svg></span><span class="section-copy"><strong>Новости</strong><small>Последние обновления</small></span><svg class="chev"><use href="#chevron"/></svg></button>
-      <button class="section-card" data-section="about"><span class="section-icon"><svg><use href="#crown"/></svg></span><span class="section-copy"><strong>О проекте</strong><small>Информация о сервере</small></span><svg class="chev"><use href="#chevron"/></svg></button>
-      <button class="section-card" data-section="team"><span class="section-icon"><svg><use href="#users"/></svg></span><span class="section-copy"><strong>Команда</strong><small>Разработчики и администрация</small></span><svg class="chev"><use href="#chevron"/></svg></button>
-      <button class="section-card" data-section="stats"><span class="section-icon"><svg><use href="#bars"/></svg></span><span class="section-copy"><strong>Статистика</strong><small>Онлайн и достижения</small></span><svg class="chev"><use href="#chevron"/></svg></button>
-      <button class="section-card" data-section="rules"><span class="section-icon"><svg><use href="#star"/></svg></span><span class="section-copy"><strong>Правила</strong><small>Основные правила проекта</small></span><svg class="chev"><use href="#chevron"/></svg></button>
-      <button class="section-card" data-section="community"><span class="section-icon"><svg><use href="#chat"/></svg></span><span class="section-copy"><strong>Сообщество</strong><small>Наши социальные сети</small></span><svg class="chev"><use href="#chevron"/></svg></button>
-     </div>
+     <div class="board-header"><span>МЕСТО / ИГРОК</span><span>СОСТОЯНИЕ</span></div>
+     <div class="board-scroll" id="boardScroll" role="list" aria-label="Список игроков Forbes"></div>
+     <div class="board-footer"><span>♛ FORBES</span><span>Листай список <span class="scroll-mark">↓</span></span></div>
     </div>
-   </section>
-   <section class="detail-screen screen" id="detailScreen" aria-label="Подраздел Форбс">
-     <div class="detail-panel"><button class="back" id="detailBack"><svg><use href="#arrow-left"/></svg><span>Форбс</span></button><div class="detail-body"><div class="detail-icon" id="detailIcon"></div><div class="detail-kicker">РАЗДЕЛ FORBES</div><h2 id="detailTitle"></h2><p id="detailDescription"></p><a class="detail-link" id="detailLink" href="site.html">Открыть раздел на сайте <svg><use href="#external"/></svg></a></div></div>
    </section>
   </main>
   <nav class="rail" aria-label="Быстрые действия">
@@ -106,6 +102,17 @@
    <button class="rail-button notification" data-rail="notifications" aria-label="Уведомления"><svg><use href="#bell"/></svg></button>
    <button class="rail-button" data-rail="settings" aria-label="Настройки"><svg><use href="#settings"/></svg></button>
   </nav>
+  <div class="player-overlay" id="playerOverlay" hidden>
+    <div class="player-modal" role="dialog" aria-modal="true" aria-labelledby="modalNick">
+      <button class="player-modal-close" id="playerModalClose" aria-label="Закрыть профиль"><svg><use href="#close"/></svg></button>
+      <div class="modal-topline"><svg><use href="#crown"/></svg> FORBES · ИГРОК</div>
+      <div class="modal-avatar" id="modalAvatar"></div>
+      <div class="modal-place" id="modalPlace"></div>
+      <h2 id="modalNick"></h2><p id="modalName"></p>
+      <div class="modal-stat"><span>Состояние</span><strong id="modalWealth"></strong></div>
+      <a id="modalVk" class="modal-vk" target="_blank" rel="noopener noreferrer">Открыть VK <svg><use href="#external"/></svg></a>
+    </div>
+  </div>
   <div class="dialog-layer" id="dialogLayer" hidden><div class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialogTitle"><button class="dialog-close" id="dialogClose" aria-label="Закрыть"><svg><use href="#close"/></svg></button><div class="dialog-label">FORBES · ПЛАНШЕТ</div><h2 id="dialogTitle"></h2><p id="dialogText"></p><a id="dialogLink" class="dialog-link" href="site.html" hidden>Открыть на сайте <svg><use href="#external"/></svg></a><button class="dialog-ok" id="dialogOk">Понятно</button></div></div>
  </div>
 </div>
