@@ -14,7 +14,7 @@ const players=order.map(([nick,wealth],i)=>{
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function resize(){const scale=Math.min((innerWidth-24)/1280,(innerHeight-24)/800,1.35);stage.style.setProperty('--stage-scale',String(Math.max(.15,scale)));}
 window.addEventListener('resize',resize,{passive:true});resize();
-function screen(show){dashboard.classList.toggle('active',show===dashboard);forbes.classList.toggle('active',show===forbes);dashboard.setAttribute('aria-hidden',String(show!==dashboard));forbes.setAttribute('aria-hidden',String(show!==forbes));}
+function screen(show){document.querySelectorAll('.main-area .screen').forEach(s=>{s.classList.toggle('active',s===show);s.setAttribute('aria-hidden',String(s!==show));});}
 function openForbes(){closeDialog();closeProfile();screen(forbes);try{history.replaceState(null,'',location.pathname+'#forbes');}catch(e){} document.getElementById('boardScroll').scrollTop=0;}
 function goHome(){closeProfile();closeDialog();screen(dashboard);try{history.replaceState(null,'',location.pathname);}catch(e){} }
 function initials(n){return n.split('_').map(x=>x[0]).join('').slice(0,2).toUpperCase();}
@@ -34,6 +34,10 @@ function openProfile(p){
   document.getElementById('modalNick').textContent=p.nick;
   document.getElementById('modalName').textContent=p.name;
   document.getElementById('modalWealth').textContent=p.wealth;
+  let badge=document.getElementById('modalTier');if(!badge){badge=document.createElement('div');badge.id='modalTier';badge.className='club-modal-tier';document.getElementById('modalWealth').parentElement.after(badge);}
+  const value=parseFloat(p.wealth.replace(',','.'))*(p.wealth.includes('млрд')?1e9:1e6);
+  const tier=window.ForbesCore?.tierFor(value,window.FORBES_CLUB_CONFIG?.servers[78]?.minimum,window.FORBES_CLUB_CONFIG?.tiers||[]);
+  badge.textContent=tier||'ОЦЕНКА НЕ УКАЗАНА';if(tier){const note=document.createElement('small');note.textContent='Расчётный уровень по сумме из демо-рейтинга';badge.append(note);}
   const vk=document.getElementById('modalVk');vk.hidden=!p.vk;if(p.vk)vk.href=p.vk;
   overlay.hidden=false;document.getElementById('playerModalClose').focus();
 }
